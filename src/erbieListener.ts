@@ -28,6 +28,8 @@ async function listenErbieEvents() {
                 bscTxHash: null,
                 status: 'pending',
                 error: null,
+                ackStatus: 0,
+                retryCount: 0,
             });
 
             console.log(`ErbieChain transaction saved to database: lockId=${lockId}`);

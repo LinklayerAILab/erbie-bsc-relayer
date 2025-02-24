@@ -13,6 +13,8 @@ interface TransactionAttributes {
     bscTxHash: string | null;
     status: 'pending' | 'success' | 'failed';
     error: string | null;
+    retryCount: number;
+    ackStatus: number;
 }
 
 
@@ -25,6 +27,8 @@ class Transaction extends Model<TransactionAttributes> implements TransactionAtt
     public bscTxHash!: string | null;
     public status!: 'pending' | 'success' | 'failed';
     public error!: string | null;
+    public retryCount!: number;
+    public ackStatus!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -64,6 +68,16 @@ Transaction.init(
         error: {
             type: DataTypes.STRING,
             allowNull: true,
+        },
+        retryCount: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false,
+        },
+        ackStatus: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false,
         },
     },
     {
