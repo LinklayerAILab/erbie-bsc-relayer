@@ -19,15 +19,15 @@ async function processBscTransaction(user: string,
         const wallet = new ethers.Wallet(Config.bscPrivateKey, provider);
         const llacontract = new ethers.Contract(tokenAddress, LLA_ABI, wallet);
 
-        // call bsc LLA contract, mint the amount to the user
+        // Call BSC LLA contract, mint the amount to the user
         const tx = await llacontract.mint(user, amount);
         console.log(`BSC transaction submitted: lockId=${lockId}, hash=${tx.hash}`);
 
-        // wait for the transaction to be mined
+        // Wait for the transaction to be mined
         const receipt = await tx.wait();
         console.log(`BSC transaction confirmed: lockId=${lockId}, blockNumber=${receipt.blockNumber}`);
 
-        // update the transaction status in the database
+        // Update the transaction status in the database
         await Transaction.update({
             status: 'success',
             bscTxHash: tx.hash,

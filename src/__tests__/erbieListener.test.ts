@@ -12,22 +12,22 @@ describe('ErbieChain Event Listener', () => {
     let mockContract: jest.Mocked<ethers.Contract>;
 
     beforeEach(() => {
-        // 清理数据库
+        // Clean up database
         return Transaction.destroy({ where: {} });
     });
 
     beforeAll(() => {
-        // 模拟 ethers Provider
+        // Mock ethers Provider
         mockProvider = {
             on: jest.fn(),
         } as any;
 
-        // 模拟合约
+        // Mock contract
         mockContract = {
             on: jest.fn(),
         } as any;
 
-        // 设置 ethers 模拟实现
+        // Set up ethers mock implementation
         const ethersModule = jest.requireMock('ethers');
         ethersModule.JsonRpcProvider.mockImplementation(() => mockProvider);
         ethersModule.Contract.mockImplementation(() => mockContract);
@@ -56,10 +56,10 @@ describe('ErbieChain Event Listener', () => {
     it('should process TokenLocked event and save transaction', async () => {
         await listenErbieEvents();
 
-        // 获取事件处理函数
+        // Get event handler function
         const eventHandler = mockContract.on.mock.calls[0][1];
 
-        // 模拟事件数据
+        // Mock event data
         const eventData = {
             user: '0x1234567890abcdef',
             tokenAddress: '0xabcdef1234567890',
@@ -69,7 +69,7 @@ describe('ErbieChain Event Listener', () => {
             transactionHash: '0xabc'
         };
 
-        // 调用事件处理函数
+        // Call event handler function
         await eventHandler(
             eventData.user,
             eventData.tokenAddress,
@@ -79,7 +79,7 @@ describe('ErbieChain Event Listener', () => {
             { transactionHash: eventData.transactionHash }
         );
 
-        // 验证数据库记录
+        // Verify database record
         const transaction = await Transaction.findByPk(eventData.lockId);
         expect(transaction).not.toBeNull();
         expect(transaction?.user).toBe(eventData.user);
@@ -88,7 +88,7 @@ describe('ErbieChain Event Listener', () => {
         expect(transaction?.erbieTxHash).toBe(eventData.transactionHash);
         expect(transaction?.status).toBe('pending');
 
-        // 验证 BSC 处理函数调用
+        // Verify BSC processor function call
         expect(processBscTransaction).toHaveBeenCalledWith(
             eventData.user,
             eventData.tokenAddress,
@@ -99,7 +99,7 @@ describe('ErbieChain Event Listener', () => {
     });
 
     it('should handle errors during event processing', async () => {
-        // 模拟 processBscTransaction 抛出错误
+        // Mock processBscTransaction to throw error
         (processBscTransaction as jest.Mock).mockRejectedValueOnce(new Error('Test error'));
 
         await listenErbieEvents();

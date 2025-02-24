@@ -10,22 +10,22 @@ describe('BSC Event Listener', () => {
     let mockContract: jest.Mocked<ethers.Contract>;
 
     beforeEach(() => {
-        // 清理数据库
+        // Clean up database
         return Transaction.destroy({ where: {} });
     });
 
     beforeAll(() => {
-        // 模拟 ethers Provider
+        // Mock ethers Provider
         mockProvider = {
             on: jest.fn(),
         } as any;
 
-        // 模拟合约
+        // Mock contract
         mockContract = {
             on: jest.fn(),
         } as any;
 
-        // 设置 ethers 模拟实现
+        // Set up ethers mock implementation
         const ethersModule = jest.requireMock('ethers');
         ethersModule.JsonRpcProvider.mockImplementation(() => mockProvider);
         ethersModule.Contract.mockImplementation(() => mockContract);
@@ -52,7 +52,7 @@ describe('BSC Event Listener', () => {
     });
 
     it('should update transaction status on CrossedSuccess event', async () => {
-        // 创建测试交易
+        // Create test transaction
         await Transaction.create({
             lockId: 1,
             user: '0x1234567890abcdef',
@@ -68,23 +68,23 @@ describe('BSC Event Listener', () => {
 
         await listenBscEvents();
 
-        // 获取事件处理函数
+        // Get event handler function
         const eventHandler = mockContract.on.mock.calls[0][1];
 
-        // 调用事件处理函数，模拟成功事件
+        // Call event handler function, simulate success event
         await eventHandler(
             ethers.getBigInt(1),
             true,
             { transactionHash: '0xdef' }
         );
 
-        // 验证交易状态更新
+        // Verify transaction status update
         const updatedTransaction = await Transaction.findByPk(1);
         expect(updatedTransaction?.ackStatus).toBe(1);
     });
 
     it('should handle failed CrossedSuccess event', async () => {
-        // 创建测试交易
+        // Create test transaction
         await Transaction.create({
             lockId: 1,
             user: '0x1234567890abcdef',
@@ -100,17 +100,17 @@ describe('BSC Event Listener', () => {
 
         await listenBscEvents();
 
-        // 获取事件处理函数
+        // Get event handler function
         const eventHandler = mockContract.on.mock.calls[0][1];
 
-        // 调用事件处理函数，模拟失败事件
+        // Call event handler function, simulate failure event
         await eventHandler(
             ethers.getBigInt(1),
             false,
             { transactionHash: '0xdef' }
         );
 
-        // 验证交易状态更新
+        // Verify transaction status update
         const updatedTransaction = await Transaction.findByPk(1);
         expect(updatedTransaction?.ackStatus).toBe(2);
     });
@@ -118,17 +118,17 @@ describe('BSC Event Listener', () => {
     it('should handle non-existent transaction', async () => {
         await listenBscEvents();
 
-        // 获取事件处理函数
+        // Get event handler function
         const eventHandler = mockContract.on.mock.calls[0][1];
 
-        // 调用事件处理函数，使用不存在的 lockId
+        // Call event handler function with non-existent lockId
         await eventHandler(
             ethers.getBigInt(999),
             true,
             { transactionHash: '0xdef' }
         );
 
-        // 验证没有抛出错误
+        // Verify no error was thrown
         const transaction = await Transaction.findByPk(999);
         expect(transaction).toBeNull();
     });
