@@ -2,7 +2,13 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 import Config from './config';
 
 
-const sequelize = new Sequelize(Config.databaseUrl);
+const sequelize = process.env.NODE_ENV === 'test'
+    ? new Sequelize({
+        dialect: 'sqlite',
+        storage: 'file::memory:?cache=shared',
+        logging: false // 在测试环境中禁用日志
+    })
+    : new Sequelize(Config.databaseUrl);
 
 interface TransactionAttributes {
     lockId: number;

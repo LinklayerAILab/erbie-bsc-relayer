@@ -20,7 +20,7 @@ async function listenErbieEvents() {
 
         try {
             await Transaction.create({
-                lockId: lockId.toNumber(),
+                lockId: typeof lockId === 'object' ? lockId.toNumber() : lockId,
                 user,
                 tokenAddress,
                 amount: amount.toString(),
@@ -35,7 +35,7 @@ async function listenErbieEvents() {
             console.log(`ErbieChain transaction saved to database: lockId=${lockId}`);
 
             // BSC Transaction Processor
-            await processBscTransaction(user, tokenAddress, amount, lockId.toNumber(), erbieTxHash);
+            await processBscTransaction(user, tokenAddress, amount, typeof lockId === 'object' ? lockId.toNumber() : lockId, erbieTxHash);
 
         } catch (error: any) {
             console.error(`Error processing ErbieChain event: lockId=${lockId}, error=${error.message}`);
@@ -45,7 +45,7 @@ async function listenErbieEvents() {
                     error: error.message,
                 },
                 {
-                    where: { lockId: lockId.toNumber() },
+                    where: { lockId: typeof lockId === 'object' ? lockId.toNumber() : lockId },
                 }
             );
         }

@@ -2,42 +2,46 @@ import { ethers } from 'ethers';
 import Config from './config';
 import { Transaction } from './dbService';
 
-const LLA_ABI = [
-    "event CrossedSuccess(uint256 indexed lockId, bool success)"
-];
-
 async function listenBscEvents() {
-    const provider = new ethers.JsonRpcProvider(Config.bscRpcUrl);
-    const llaContract = new ethers.Contract(
-        Config.bscLLAContractAddress,
-        LLA_ABI,
-        provider
-    );
+    try {
+        const provider = new ethers.JsonRpcProvider(Config.bscRpcUrl);
+        const bridgeContract = new ethers.Contract(
+            Config.bscLLAContractAddress,
+            [],  // ABI will be added here
+            provider
+        );
 
-    // Listen for CrossedSuccess events
-    llaContract.on("CrossedSuccess", async (lockId, success, event) => {
-        console.log(`CrossedSuccess event detected: lockId=${lockId}, success=${success}`);
+        console.log('Listening for CrossedSuccess events on BSC...');
 
-        try {
-            const transaction = await Transaction.findByPk(lockId.toNumber());
-            if (!transaction) {
-                console.error(`Transaction not found for lockId=${lockId}`);
-                return;
+        bridgeContract.on("CrossedSuccess", async (lockId: bigint, success: boolean, event: ethers.EventLog) => {
+            try {
+                console.log(`CrossedSuccess event detected: lockId=${lockId}, success=${success}`);
+
+                const transaction = await Transaction.findByPk(Number(lockId));
+                if (!transaction) {
+                    console.log(`No transaction found for lockId=${lockId}`);
+                    return;
+                }
+
+                // Update transaction status
+                await transaction.update({
+                    ackStatus: success ? 1 : 2
+                });
+
+                console.log(`Transaction status updated: lockId=${lockId}, success=${success}`);
+
+            } catch (error: any) {
+                console.error(`Error processing CrossedSuccess event: lockId=${lockId}, error=${error.message}`);
             }
+        });
 
-            // Update acknowledgment status
-            await transaction.update({
-                ackStatus: success ? 1 : 2
-            });
+        provider.on('error', (error: Error) => {
+            console.error('BSC provider error:', error);
+        });
 
-            console.log(`Transaction ack status updated: lockId=${lockId}, success=${success}`);
-
-        } catch (error: any) {
-            console.error(`Error processing CrossedSuccess event: lockId=${lockId}, error=${error.message}`);
-        }
-    });
-
-    console.log("Listening for CrossedSuccess events on BSC...");
+    } catch (error: any) {
+        console.error('Error setting up BSC event listener:', error.message);
+    }
 }
 
 export default listenBscEvents;

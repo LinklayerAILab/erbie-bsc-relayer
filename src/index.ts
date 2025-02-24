@@ -4,8 +4,8 @@ import { syncDatabase, Transaction } from './dbService';
 import { processBscTransaction } from './bscProcessor';
 import { Op } from 'sequelize';
 
-async function startRetryMechanism() {
-    setInterval(async () => {
+export async function startRetryMechanism(): Promise<NodeJS.Timeout> {
+    return setInterval(async () => {
         try {
             const pendingTransactions = await Transaction.findAll({
                 where: {
