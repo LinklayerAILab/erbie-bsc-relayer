@@ -6,7 +6,7 @@ const sequelize = process.env.NODE_ENV === 'test'
     ? new Sequelize({
         dialect: 'sqlite',
         storage: 'file::memory:?cache=shared',
-        logging: false // 在测试环境中禁用日志
+        logging: false
     })
     : new Sequelize(Config.databaseUrl);
 
