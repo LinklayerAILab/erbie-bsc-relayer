@@ -4,11 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:testnet": "NODE_ENV=testnet node dist/index.js",
+    "start:mainnet": "NODE_ENV=mainnet node dist/index.js"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
     "ethers": "^6.13.5",
+    "mysql2": "^3.14.0",
     "pg": "^8.13.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",

@@ -70,15 +70,33 @@ The relayer consists of several key components:
 5. Compile TypeScript:
 
    ```
-   yarn tsc
+   yarn build
    ```
 
 ## Usage
 
-Start the relayer service:
+### Running in Default Environment
+
+Start the relayer service with default environment:
 
 ```
-node dist/index.js
+yarn start
+```
+
+### Running in Testnet Environment
+
+Start the relayer service in testnet environment:
+
+```
+yarn start:testnet
+```
+
+### Running in Mainnet Environment
+
+Start the relayer service in mainnet environment:
+
+```
+yarn start:mainnet
 ```
 
 The service will:

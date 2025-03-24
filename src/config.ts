@@ -1,6 +1,24 @@
 import * as dotenv from 'dotenv';
+import * as fs from 'fs';
+import * as path from 'path';
 
-dotenv.config();
+// Load environment configuration based on NODE_ENV
+const envFile = process.env.NODE_ENV === 'testnet'
+    ? '.env.testnet'
+    : process.env.NODE_ENV === 'mainnet'
+        ? '.env.mainnet'
+        : '.env';
+
+const envPath = path.resolve(process.cwd(), envFile);
+
+// Check if the environment file exists
+if (fs.existsSync(envPath)) {
+    console.log(`Loading environment from ${envFile}`);
+    dotenv.config({ path: envPath });
+} else {
+    console.log(`Environment file ${envFile} not found, using default .env`);
+    dotenv.config();
+}
 
 
 interface ConfigType {
