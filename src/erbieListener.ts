@@ -2,14 +2,18 @@ import { ethers } from 'ethers';
 import Config from './config';
 import { Transaction, syncDatabase } from './dbService';
 import { processBscTransaction } from './bscProcessor';
+import * as fs from 'fs';
+import * as path from 'path';
 
 async function listenErbieEvents() {
+    // Load ABI from file
+    const abiPath = path.resolve(__dirname, '../abi/erbieBridge.json');
+    const abiJson = JSON.parse(fs.readFileSync(abiPath, 'utf8'));
+
     const provider = new ethers.JsonRpcProvider(Config.erbieRPCUrl);
     const bridgeContract = new ethers.Contract(
         Config.erbieBridgeAddress,
-        [
-            "event TokenLocked(address indexed user, address tokenAddress, uint256 amount, uint256 lockId, uint256 timestamp)"
-        ],
+        abiJson.abi,
         provider
     );
 

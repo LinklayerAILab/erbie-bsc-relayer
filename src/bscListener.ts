@@ -1,13 +1,19 @@
 import { ethers } from 'ethers';
 import Config from './config';
 import { Transaction } from './dbService';
+import * as fs from 'fs';
+import * as path from 'path';
 
 async function listenBscEvents() {
     try {
+        // Load ABI from file
+        const abiPath = path.resolve(__dirname, '../abi/bscBridge.json');
+        const abiJson = JSON.parse(fs.readFileSync(abiPath, 'utf8'));
+
         const provider = new ethers.JsonRpcProvider(Config.bscRpcUrl);
         const bridgeContract = new ethers.Contract(
             Config.bscLLAContractAddress,
-            [],  // ABI will be added here
+            abiJson.abi,
             provider
         );
 
