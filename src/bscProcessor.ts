@@ -30,8 +30,7 @@ async function processBscTransaction(user: string,
         // Update the transaction status in the database
         await Transaction.update({
             status: 'success',
-            bscTxHash: tx.hash,
-            erbieTxHash: erbieTxHash
+            bscTxHash: tx.hash
         }, {
             where: {
                 lockId: lockId
@@ -51,8 +50,6 @@ async function processBscTransaction(user: string,
                 lockId: lockId
             }
         });
-
-        // Do we need to transfer the tokens in the bridge contract back to the user
     }
 }
 

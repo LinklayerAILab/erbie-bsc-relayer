@@ -18,17 +18,34 @@ async function listenErbieEvents() {
     );
 
     bridgeContract.on("TokenLocked", async (user, tokenAddress, amount, lockId, timestamp, event) => {
-        console.log(`TokenLocked event detected: lockId=${lockId}, user=${user}, amount=${amount}`);
-
-        const erbieTxHash = event.transactionHash;
-
+        console.log(`TokenLocked event detected: lockId=${lockId}, user=${user}, amount=${amount}, timestamp=${timestamp}`);
+        
+        // 从事件对象中获取交易哈希
+        let erbieTxHash = '';
+        
+        // 首先尝试从log属性中获取transactionHash
+        if (event && event.log && event.log.transactionHash) {
+            erbieTxHash = event.log.transactionHash;
+            console.log(`Found transactionHash in event.log: ${erbieTxHash}`);
+        } 
+        // 如果log中没有，看事件对象本身是否有transactionHash
+        else if (event && event.transactionHash) {
+            erbieTxHash = event.transactionHash;
+            console.log(`Found transactionHash in event: ${erbieTxHash}`);
+        } 
+        // 都没有，则生成一个唯一ID
+        else {
+            erbieTxHash = `tx_${Date.now()}_${lockId}`;
+            console.log(`Generated transactionHash: ${erbieTxHash}`);
+        }
+        
         try {
             await Transaction.create({
                 lockId: typeof lockId === 'object' ? lockId.toNumber() : lockId,
                 user,
                 tokenAddress,
                 amount: amount.toString(),
-                erbieTxHash,
+                erbieTxHash: erbieTxHash,
                 bscTxHash: null,
                 status: 'pending',
                 error: null,
@@ -36,13 +53,15 @@ async function listenErbieEvents() {
                 retryCount: 0,
             });
 
-            console.log(`ErbieChain transaction saved to database: lockId=${lockId}`);
+            console.log(`ErbieChain transaction saved to database: lockId=${lockId}, erbieTxHash=${erbieTxHash}`);
 
             // BSC Transaction Processor
             await processBscTransaction(user, tokenAddress, amount, typeof lockId === 'object' ? lockId.toNumber() : lockId, erbieTxHash);
 
         } catch (error: any) {
             console.error(`Error processing ErbieChain event: lockId=${lockId}, error=${error.message}`);
+            
+            // 尝试更新状态（如果记录已存在）
             await Transaction.update(
                 {
                     status: 'failed',

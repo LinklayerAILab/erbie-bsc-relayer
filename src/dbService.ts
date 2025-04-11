@@ -60,7 +60,7 @@ Transaction.init(
         },
         erbieTxHash: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         bscTxHash: {
             type: DataTypes.STRING,
