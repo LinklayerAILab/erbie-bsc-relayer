@@ -3,6 +3,7 @@ import Config from './config';
 import { Transaction } from './dbService';
 import * as fs from 'fs';
 import * as path from 'path';
+import log from './logService';
 
 // 加载BSC桥接合约ABI
 const abiPath = path.resolve(__dirname, '../abi/bscBridge.json');
@@ -27,11 +28,11 @@ async function processBscTransaction(user: string,
 
         // 调用BSC桥接合约的mintLLA方法
         const tx = await bscBridgeContract.mintLLA(user, amount, txHashBytes32);
-        console.log(`BSC transaction submitted: lockId=${lockId}, hash=${tx.hash}`);
+        log.info(`BSC transaction submitted: lockId=${lockId}, hash=${tx.hash}`);
 
         // Wait for the transaction to be mined
         const receipt = await tx.wait();
-        console.log(`BSC transaction confirmed: lockId=${lockId}, blockNumber=${receipt.blockNumber}`);
+        log.info(`BSC transaction confirmed: lockId=${lockId}, blockNumber=${receipt.blockNumber}`);
 
         // Update the transaction status in the database
         await Transaction.update({
@@ -43,10 +44,10 @@ async function processBscTransaction(user: string,
             }
         });
 
-        console.log(`Database updated with BSC transaction details: lockId=${lockId}`);
+        log.info(`Database updated with BSC transaction details: lockId=${lockId}`);
 
     } catch (error: any) {
-        console.error(`Error processing BSC transaction: lockId=${lockId}, error=${error.message}`);
+        log.error(`Error processing BSC transaction: lockId=${lockId}`, error);
         // update the transaction status in the database
         await Transaction.update({
             status: 'failed',

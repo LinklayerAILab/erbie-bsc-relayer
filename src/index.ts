@@ -3,6 +3,7 @@ import listenBscEvents from './bscListener';
 import { syncDatabase, Transaction } from './dbService';
 import { processBscTransaction } from './bscProcessor';
 import { Op } from 'sequelize';
+import log from './logService';
 
 export async function startRetryMechanism(): Promise<NodeJS.Timeout> {
     return setInterval(async () => {
@@ -18,7 +19,7 @@ export async function startRetryMechanism(): Promise<NodeJS.Timeout> {
             });
 
             for (const transaction of pendingTransactions) {
-                console.log(`Retrying transaction: lockId=${transaction.lockId}, retry count=${transaction.retryCount}`);
+                log.info(`Retrying transaction: lockId=${transaction.lockId}, retry count=${transaction.retryCount}`);
 
                 try {
                     await processBscTransaction(
@@ -33,16 +34,16 @@ export async function startRetryMechanism(): Promise<NodeJS.Timeout> {
                     await transaction.increment('retryCount');
 
                 } catch (error: any) {
-                    console.error(`Retry failed for lockId=${transaction.lockId}: ${error.message}`);
+                    log.error(`Retry failed for lockId=${transaction.lockId}`, error);
                     await transaction.increment('retryCount');
                 }
             }
         } catch (error: any) {
-            console.error('Error in retry mechanism:', error.message);
+            log.error('Error in retry mechanism', error);
         }
     }, 5 * 60 * 1000); // Check every 5 minutes
 
-    console.log("Transaction retry mechanism started...");
+    log.info("Transaction retry mechanism started...");
 }
 
 async function main() {
@@ -59,7 +60,7 @@ async function main() {
         await startRetryMechanism();
 
     } catch (error) {
-        console.error("Failed to start the application:", error);
+        log.error("Failed to start the application", error);
     }
 }
 

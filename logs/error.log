@@ -1,0 +1,7 @@
+2025-04-17 15:51:29 [ERROR]: Error processing TokenMinted event: txHash=[object Object]: Invalid value { transactionHash: '0xdef' }
+2025-04-17 15:51:29 [ERROR]: Error processing TokenMinted event: txHash=[object Object]: Invalid value { transactionHash: '0xdef' }
+2025-04-17 15:51:29 [ERROR]: Error processing TokenMinted event: txHash=[object Object]: Invalid value { transactionHash: '0xdef' }
+2025-04-17 15:51:50 [ERROR]: Error processing TokenMinted event: txHash=[object Object]: Invalid value { transactionHash: '0xdef' }
+2025-04-17 15:51:50 [ERROR]: Error processing TokenMinted event: txHash=[object Object]: Invalid value { transactionHash: '0xdef' }
+2025-04-17 15:51:50 [ERROR]: Error processing TokenMinted event: txHash=[object Object]: Invalid value { transactionHash: '0xdef' }
+2025-04-17 15:51:50 [ERROR]: Error processing ErbieChain event: lockId=1: Test error

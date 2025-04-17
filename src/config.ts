@@ -11,12 +11,14 @@ const envFile = process.env.NODE_ENV === 'testnet'
 
 const envPath = path.resolve(process.cwd(), envFile);
 
+import log from './logService';
+
 // Check if the environment file exists
 if (fs.existsSync(envPath)) {
-    console.log(`Loading environment from ${envFile}`);
+    log.info(`Loading environment from ${envFile}`);
     dotenv.config({ path: envPath });
 } else {
-    console.log(`Environment file ${envFile} not found, using default .env`);
+    log.info(`Environment file ${envFile} not found, using default .env`);
     dotenv.config();
 }
 
@@ -28,6 +30,7 @@ interface ConfigType {
     bscLLAContractAddress: string;
     bscPrivateKey: string;
     databaseUrl: string;
+    logLevel: string;
 }
 
 const cfg: ConfigType = {
@@ -37,6 +40,7 @@ const cfg: ConfigType = {
     bscLLAContractAddress: process.env.BSC_LLA_CONTRACT_ADDRESS || '',
     bscPrivateKey: process.env.BSC_PRIVATE_KEY || '',
     databaseUrl: process.env.DATABASE_URL || '',
+    logLevel: process.env.LOG_LEVEL || 'info',
 }
 
 export default cfg;
