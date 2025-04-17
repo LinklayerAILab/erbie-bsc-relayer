@@ -1,12 +1,12 @@
 import { ethers } from 'ethers';
 import Config from './config';
 import { Transaction } from './dbService';
+import * as fs from 'fs';
+import * as path from 'path';
 
-
-
-const LLA_ABI = [
-    "function mint(address to, uint256 amount) external"
-];
+// 加载BSC桥接合约ABI
+const abiPath = path.resolve(__dirname, '../abi/bscBridge.json');
+const bscBridgeAbi = JSON.parse(fs.readFileSync(abiPath, 'utf8')).abi;
 
 async function processBscTransaction(user: string,
     tokenAddress: string,
@@ -17,10 +17,16 @@ async function processBscTransaction(user: string,
     try {
         const provider = new ethers.JsonRpcProvider(Config.bscRpcUrl);
         const wallet = new ethers.Wallet(Config.bscPrivateKey, provider);
-        const llacontract = new ethers.Contract(tokenAddress, LLA_ABI, wallet);
+        const bscBridgeContract = new ethers.Contract(Config.bscLLAContractAddress, bscBridgeAbi, wallet);
 
-        // Call BSC LLA contract, mint the amount to the user
-        const tx = await llacontract.mint(user, amount);
+        // 将erbieTxHash转换为bytes32格式
+        // 如果erbieTxHash已经是十六进制字符串，直接使用，否则进行转换
+        const txHashBytes32 = erbieTxHash.startsWith('0x')
+            ? ethers.zeroPadValue(erbieTxHash, 32)
+            : ethers.zeroPadValue(ethers.keccak256(ethers.toUtf8Bytes(erbieTxHash)), 32);
+
+        // 调用BSC桥接合约的mintLLA方法
+        const tx = await bscBridgeContract.mintLLA(user, amount, txHashBytes32);
         console.log(`BSC transaction submitted: lockId=${lockId}, hash=${tx.hash}`);
 
         // Wait for the transaction to be mined

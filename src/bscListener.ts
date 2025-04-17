@@ -17,27 +17,31 @@ async function listenBscEvents() {
             provider
         );
 
-        console.log('Listening for CrossedSuccess events on BSC...');
+        console.log('Listening for TokenMinted events on BSC...');
 
-        bridgeContract.on("CrossedSuccess", async (lockId: bigint, success: boolean, event: ethers.EventLog) => {
+        bridgeContract.on("TokenMinted", async (user: string, amount: bigint, txHash: string, event: ethers.EventLog) => {
             try {
-                console.log(`CrossedSuccess event detected: lockId=${lockId}, success=${success}`);
+                console.log(`TokenMinted event detected: user=${user}, amount=${amount}, txHash=${txHash}`);
 
-                const transaction = await Transaction.findByPk(Number(lockId));
+                // Find transaction by erbieTxHash
+                const transaction = await Transaction.findOne({
+                    where: { erbieTxHash: txHash }
+                });
+
                 if (!transaction) {
-                    console.log(`No transaction found for lockId=${lockId}`);
+                    console.log(`No transaction found for txHash=${txHash}`);
                     return;
                 }
 
                 // Update transaction status
                 await transaction.update({
-                    ackStatus: success ? 1 : 2
+                    ackStatus: 1 // Success
                 });
 
-                console.log(`Transaction status updated: lockId=${lockId}, success=${success}`);
+                console.log(`Transaction status updated: lockId=${transaction.lockId}, txHash=${txHash}`);
 
             } catch (error: any) {
-                console.error(`Error processing CrossedSuccess event: lockId=${lockId}, error=${error.message}`);
+                console.error(`Error processing TokenMinted event: txHash=${txHash}, error=${error.message}`);
             }
         });
 
