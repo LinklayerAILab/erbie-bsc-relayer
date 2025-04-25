@@ -119,3 +119,76 @@
 2025-04-25 13:11:17 [INFO]: ErbieChain transaction saved to database: lockId=16, erbieTxHash=0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263
 2025-04-25 13:11:17 [INFO]: Converting erbieTxHash to bytes32: original=0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263, converted=0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263
 2025-04-25 13:11:18 [ERROR]: Error processing BSC transaction: lockId=16: execution reverted (unknown custom error) (action="estimateGas", data="0xe2517d3f000000000000000000000000cbd46a2d6c99a7b8daa2c35de2aead37aa36f5069f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6", reason=null, transaction={ "data": "0x8dfdab1c0000000000000000000000002a241105a70c6372f9b4274158d74efa38ab5cbb0000000000000000000000000000000000000000000000000000000000000001e74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263", "from": "0x2a241105a70C6372F9b4274158d74EFA38ab5CbB", "to": "0xCBD46A2D6c99A7B8daa2C35DE2aEad37Aa36f506" }, invocation=null, revert=null, code=CALL_EXCEPTION, version=6.13.5)
+2025-04-25 13:29:30 [INFO]: Loading environment from .env.testnet
+2025-04-25 13:29:31 [INFO]: Listening for TokenLocked events on ErbieChain...
+2025-04-25 13:29:31 [INFO]: Listening for TokenMinted events on BSC...
+2025-04-25 13:30:52 [INFO]: TokenLocked event detected: lockId=17, user=0x2a241105a70C6372F9b4274158d74EFA38ab5CbB, amount=1, timestamp=1745559049
+2025-04-25 13:30:52 [INFO]: Found transactionHash in event.log: 0x0c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563
+2025-04-25 13:30:52 [INFO]: ErbieChain transaction saved to database: lockId=17, erbieTxHash=0x0c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563
+2025-04-25 13:30:52 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 13:30:53 [INFO]: Contract is active (not paused)
+2025-04-25 13:30:53 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 13:30:53 [INFO]: Converting erbieTxHash to bytes32: original=0x0c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563, converted=0x0c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563
+2025-04-25 13:30:54 [INFO]: Transaction hash has not been processed yet: 0x0c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563
+2025-04-25 13:30:55 [ERROR]: Error processing BSC transaction: lockId=17: execution reverted (unknown custom error) (action="estimateGas", data="0xe2517d3f000000000000000000000000cbd46a2d6c99a7b8daa2c35de2aead37aa36f5069f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6", reason=null, transaction={ "data": "0x8dfdab1c0000000000000000000000002a241105a70c6372f9b4274158d74efa38ab5cbb00000000000000000000000000000000000000000000000000000000000000010c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563", "from": "0x2a241105a70C6372F9b4274158d74EFA38ab5CbB", "to": "0xCBD46A2D6c99A7B8daa2C35DE2aEad37Aa36f506" }, invocation=null, revert=null, code=CALL_EXCEPTION, version=6.13.5)
+2025-04-25 13:34:31 [INFO]: Retrying transaction: lockId=14, retry count=2
+2025-04-25 13:34:31 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 13:34:31 [INFO]: Contract is active (not paused)
+2025-04-25 13:34:32 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 13:34:32 [INFO]: Converting erbieTxHash to bytes32: original=0x55c945da9a2708151e0096927b4dad9947297567e45dd72088d9a2d84bf3fb65, converted=0x55c945da9a2708151e0096927b4dad9947297567e45dd72088d9a2d84bf3fb65
+2025-04-25 13:34:32 [INFO]: Transaction hash has not been processed yet: 0x55c945da9a2708151e0096927b4dad9947297567e45dd72088d9a2d84bf3fb65
+2025-04-25 13:34:33 [ERROR]: Error processing BSC transaction: lockId=14: execution reverted (unknown custom error) (action="estimateGas", data="0xe2517d3f000000000000000000000000cbd46a2d6c99a7b8daa2c35de2aead37aa36f5069f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6", reason=null, transaction={ "data": "0x8dfdab1c0000000000000000000000002a241105a70c6372f9b4274158d74efa38ab5cbb000000000000000000000000000000000000000000000000000000000000000155c945da9a2708151e0096927b4dad9947297567e45dd72088d9a2d84bf3fb65", "from": "0x2a241105a70C6372F9b4274158d74EFA38ab5CbB", "to": "0xCBD46A2D6c99A7B8daa2C35DE2aEad37Aa36f506" }, invocation=null, revert=null, code=CALL_EXCEPTION, version=6.13.5)
+2025-04-25 13:34:33 [INFO]: Retrying transaction: lockId=15, retry count=1
+2025-04-25 13:34:33 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 13:34:34 [INFO]: Contract is active (not paused)
+2025-04-25 13:34:34 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 13:34:34 [INFO]: Converting erbieTxHash to bytes32: original=0xac379717906d2d4952fd7a82023e80634030952a920fc8403012b9edaee734c9, converted=0xac379717906d2d4952fd7a82023e80634030952a920fc8403012b9edaee734c9
+2025-04-25 13:34:35 [INFO]: Transaction hash has not been processed yet: 0xac379717906d2d4952fd7a82023e80634030952a920fc8403012b9edaee734c9
+2025-04-25 13:34:36 [ERROR]: Error processing BSC transaction: lockId=15: execution reverted (unknown custom error) (action="estimateGas", data="0xe2517d3f000000000000000000000000cbd46a2d6c99a7b8daa2c35de2aead37aa36f5069f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6", reason=null, transaction={ "data": "0x8dfdab1c0000000000000000000000002a241105a70c6372f9b4274158d74efa38ab5cbb0000000000000000000000000000000000000000000000000000000000000001ac379717906d2d4952fd7a82023e80634030952a920fc8403012b9edaee734c9", "from": "0x2a241105a70C6372F9b4274158d74EFA38ab5CbB", "to": "0xCBD46A2D6c99A7B8daa2C35DE2aEad37Aa36f506" }, invocation=null, revert=null, code=CALL_EXCEPTION, version=6.13.5)
+2025-04-25 13:34:36 [INFO]: Retrying transaction: lockId=16, retry count=0
+2025-04-25 13:34:36 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 13:34:36 [INFO]: Contract is active (not paused)
+2025-04-25 13:34:37 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 13:34:37 [INFO]: Converting erbieTxHash to bytes32: original=0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263, converted=0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263
+2025-04-25 13:34:37 [INFO]: Transaction hash has not been processed yet: 0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263
+2025-04-25 14:05:23 [INFO]: Loading environment from .env.testnet
+2025-04-25 14:05:24 [INFO]: Listening for TokenLocked events on ErbieChain...
+2025-04-25 14:05:24 [INFO]: Listening for TokenMinted events on BSC...
+2025-04-25 14:06:17 [INFO]: TokenLocked event detected: lockId=18, user=0x2a241105a70C6372F9b4274158d74EFA38ab5CbB, amount=1, timestamp=1745561174
+2025-04-25 14:06:17 [INFO]: Found transactionHash in event.log: 0xef5888beb448641af95377e3fcdb41053e2c227c507394ff890dfb1834efa280
+2025-04-25 14:06:17 [INFO]: ErbieChain transaction saved to database: lockId=18, erbieTxHash=0xef5888beb448641af95377e3fcdb41053e2c227c507394ff890dfb1834efa280
+2025-04-25 14:06:17 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 14:06:18 [INFO]: Contract is active (not paused)
+2025-04-25 14:06:19 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 14:06:19 [INFO]: Converting erbieTxHash to bytes32: original=0xef5888beb448641af95377e3fcdb41053e2c227c507394ff890dfb1834efa280, converted=0xef5888beb448641af95377e3fcdb41053e2c227c507394ff890dfb1834efa280
+2025-04-25 14:06:19 [INFO]: Transaction hash has not been processed yet: 0xef5888beb448641af95377e3fcdb41053e2c227c507394ff890dfb1834efa280
+2025-04-25 14:06:22 [INFO]: BSC transaction submitted: lockId=18, hash=0x4f73b74ce5ab2592c287e83312e94f989ea4011c7a46806fad5eebf296f70333
+2025-04-25 14:06:29 [INFO]: BSC transaction confirmed: lockId=18, blockNumber=50765245
+2025-04-25 14:06:29 [INFO]: Database updated with BSC transaction details: lockId=18
+2025-04-25 14:10:24 [INFO]: Retrying transaction: lockId=15, retry count=2
+2025-04-25 14:10:24 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 14:10:24 [INFO]: Contract is active (not paused)
+2025-04-25 14:10:25 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 14:10:25 [INFO]: Converting erbieTxHash to bytes32: original=0xac379717906d2d4952fd7a82023e80634030952a920fc8403012b9edaee734c9, converted=0xac379717906d2d4952fd7a82023e80634030952a920fc8403012b9edaee734c9
+2025-04-25 14:10:25 [INFO]: Transaction hash has not been processed yet: 0xac379717906d2d4952fd7a82023e80634030952a920fc8403012b9edaee734c9
+2025-04-25 14:10:28 [INFO]: BSC transaction submitted: lockId=15, hash=0xdbaeeb1cf70f42fcbaded379dc6a608aacf0e42ab31a9fe6e4083d65c3c603d8
+2025-04-25 14:10:30 [INFO]: BSC transaction confirmed: lockId=15, blockNumber=50765408
+2025-04-25 14:10:30 [INFO]: Database updated with BSC transaction details: lockId=15
+2025-04-25 14:10:30 [INFO]: Retrying transaction: lockId=16, retry count=0
+2025-04-25 14:10:30 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 14:10:30 [INFO]: Contract is active (not paused)
+2025-04-25 14:10:30 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 14:10:30 [INFO]: Converting erbieTxHash to bytes32: original=0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263, converted=0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263
+2025-04-25 14:10:31 [INFO]: Transaction hash has not been processed yet: 0xe74ce521caf93583b76a6fc2d06c48a5de8334e3766ee558936bd5afa3bba263
+2025-04-25 14:10:34 [INFO]: BSC transaction submitted: lockId=16, hash=0xcc393a95834d50a8de4aad7f2f0cea4ec51d062ed8912fe9cd2230ebc51e9b6e
+2025-04-25 14:10:39 [INFO]: BSC transaction confirmed: lockId=16, blockNumber=50765412
+2025-04-25 14:10:39 [INFO]: Database updated with BSC transaction details: lockId=16
+2025-04-25 14:10:39 [INFO]: Retrying transaction: lockId=17, retry count=0
+2025-04-25 14:10:39 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 14:10:40 [INFO]: Contract is active (not paused)
+2025-04-25 14:10:40 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 14:10:40 [INFO]: Converting erbieTxHash to bytes32: original=0x0c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563, converted=0x0c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563
+2025-04-25 14:10:41 [INFO]: Transaction hash has not been processed yet: 0x0c4d150daa6c5d1f3a8a0a066bc6320f3e636b6db85a85f2c43a27cd95fbf563
+2025-04-25 14:10:44 [INFO]: BSC transaction submitted: lockId=17, hash=0xb8cfcbe57e58b79a825b10ac6a89e9e5223f3dbbc78da1f8fddd29068c098937
+2025-04-25 14:10:50 [INFO]: BSC transaction confirmed: lockId=17, blockNumber=50765419
+2025-04-25 14:10:50 [INFO]: Database updated with BSC transaction details: lockId=17

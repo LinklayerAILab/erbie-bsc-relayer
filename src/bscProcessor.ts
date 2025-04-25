@@ -20,6 +20,39 @@ async function processBscTransaction(user: string,
         const wallet = new ethers.Wallet(Config.bscPrivateKey, provider);
         const bscBridgeContract = new ethers.Contract(Config.bscBridgeContractAddress, bscBridgeAbi, wallet);
 
+        // 检查合约状态和权限
+        log.info(`Checking contract state and permissions for wallet: ${wallet.address}...`);
+        
+        // 检查合约是否暂停
+        try {
+            const isPaused = await bscBridgeContract.paused();
+            if (isPaused) {
+                throw new Error("Contract is currently paused");
+            }
+            log.info("Contract is active (not paused)");
+        } catch (error: any) {
+            if (error.message !== "Contract is currently paused") {
+                log.warn(`Could not check if contract is paused: ${error.message}`);
+            } else {
+                throw error;
+            }
+        }
+        
+        // 检查钱包是否是授权的中继器
+        try {
+            const isRelayer = await bscBridgeContract.isRelayer(wallet.address);
+            if (!isRelayer) {
+                throw new Error(`Wallet ${wallet.address} is not an authorized relayer`);
+            }
+            log.info(`Wallet is an authorized relayer: ${wallet.address}`);
+        } catch (error: any) {
+            if (error.message.includes("not an authorized relayer")) {
+                throw error;
+            } else {
+                log.warn(`Could not check if wallet is a relayer: ${error.message}`);
+            }
+        }
+
         // 正确转换erbieTxHash为bytes32
         let txHashBytes32;
         
@@ -35,6 +68,21 @@ async function processBscTransaction(user: string,
         }
         
         log.info(`Converting erbieTxHash to bytes32: original=${erbieTxHash}, converted=${txHashBytes32}`);
+        
+        // 检查交易哈希是否已经被处理过
+        try {
+            const processed = await bscBridgeContract.processedHashes(txHashBytes32);
+            if (processed) {
+                throw new Error(`Transaction hash ${txHashBytes32} has already been processed`);
+            }
+            log.info(`Transaction hash has not been processed yet: ${txHashBytes32}`);
+        } catch (error: any) {
+            if (error.message.includes("already been processed")) {
+                throw error;
+            } else {
+                log.warn(`Could not check if transaction hash is processed: ${error.message}`);
+            }
+        }
 
         // 调用BSC桥接合约的mintLLA方法
         const tx = await bscBridgeContract.mintLLA(user, amount, txHashBytes32);
