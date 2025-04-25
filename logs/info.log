@@ -39,3 +39,19 @@
 2025-04-25 14:10:44 [INFO]: BSC transaction submitted: lockId=17, hash=0xb8cfcbe57e58b79a825b10ac6a89e9e5223f3dbbc78da1f8fddd29068c098937
 2025-04-25 14:10:50 [INFO]: BSC transaction confirmed: lockId=17, blockNumber=50765419
 2025-04-25 14:10:50 [INFO]: Database updated with BSC transaction details: lockId=17
+2025-04-25 14:12:30 [INFO]: Loading environment from .env.testnet
+2025-04-25 14:12:30 [INFO]: Listening for TokenLocked events on ErbieChain...
+2025-04-25 14:12:30 [INFO]: Listening for TokenMinted events on BSC...
+2025-04-25 14:13:40 [INFO]: TokenLocked event detected: lockId=19, user=0x2a241105a70C6372F9b4274158d74EFA38ab5CbB, amount=1, timestamp=1745561619
+2025-04-25 14:13:40 [INFO]: Found transactionHash in event.log: 0xd8204bdac1fb353c58938f2c99c1cfffe8960dee5a7678fd5a66a3fc609a99ea
+2025-04-25 14:13:40 [INFO]: ErbieChain transaction saved to database: lockId=19, erbieTxHash=0xd8204bdac1fb353c58938f2c99c1cfffe8960dee5a7678fd5a66a3fc609a99ea
+2025-04-25 14:13:40 [INFO]: Checking contract state and permissions for wallet: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB...
+2025-04-25 14:13:41 [INFO]: Contract is active (not paused)
+2025-04-25 14:13:41 [INFO]: Wallet is an authorized relayer: 0x2a241105a70C6372F9b4274158d74EFA38ab5CbB
+2025-04-25 14:13:41 [INFO]: Converting erbieTxHash to bytes32: original=0xd8204bdac1fb353c58938f2c99c1cfffe8960dee5a7678fd5a66a3fc609a99ea, converted=0xd8204bdac1fb353c58938f2c99c1cfffe8960dee5a7678fd5a66a3fc609a99ea
+2025-04-25 14:13:42 [INFO]: Transaction hash has not been processed yet: 0xd8204bdac1fb353c58938f2c99c1cfffe8960dee5a7678fd5a66a3fc609a99ea
+2025-04-25 14:13:45 [INFO]: BSC transaction submitted: lockId=19, hash=0xfac7febad4de363c0c6875ace65aa418739eaa5814de4c18de700fc2c4ffa2c5
+2025-04-25 14:13:51 [INFO]: BSC transaction confirmed: lockId=19, blockNumber=50765539
+2025-04-25 14:13:51 [INFO]: Database updated with BSC transaction details: lockId=19
+2025-04-25 14:14:24 [INFO]: TokenMinted event detected: user=0x2a241105a70C6372F9b4274158d74EFA38ab5CbB, amount=1, txHash=0xd8204bdac1fb353c58938f2c99c1cfffe8960dee5a7678fd5a66a3fc609a99ea
+2025-04-25 14:14:24 [INFO]: Transaction status updated: lockId=19, txHash=0xd8204bdac1fb353c58938f2c99c1cfffe8960dee5a7678fd5a66a3fc609a99ea

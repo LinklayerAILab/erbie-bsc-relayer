@@ -13,7 +13,7 @@ async function listenBscEvents() {
 
         const provider = new ethers.JsonRpcProvider(Config.bscRpcUrl);
         const bridgeContract = new ethers.Contract(
-            Config.bscLLAContractAddress,
+            Config.bscBridgeContractAddress,
             abiJson.abi,
             provider
         );
