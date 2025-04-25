@@ -28,6 +28,7 @@ interface ConfigType {
     erbieBridgeAddress: string;
     bscRpcUrl: string;
     bscLLAContractAddress: string;
+    bscBridgeContractAddress: string;
     bscPrivateKey: string;
     databaseUrl: string;
     logLevel: string;
@@ -38,6 +39,7 @@ const cfg: ConfigType = {
     erbieBridgeAddress: process.env.ERBIE_BRIDGE_ADDRESS || '',
     bscRpcUrl: process.env.BSC_RPC_URL || '',
     bscLLAContractAddress: process.env.BSC_LLA_CONTRACT_ADDRESS || '',
+    bscBridgeContractAddress: process.env.BSC_BRIDGE_CONTRACT_ADDRESS || '',
     bscPrivateKey: process.env.BSC_PRIVATE_KEY || '',
     databaseUrl: process.env.DATABASE_URL || '',
     logLevel: process.env.LOG_LEVEL || 'info',

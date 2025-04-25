@@ -72,7 +72,7 @@ Transaction.init(
             allowNull: false,
         },
         error: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(500),
             allowNull: true,
         },
         retryCount: {
